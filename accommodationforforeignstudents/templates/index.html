@@ -1,0 +1,67 @@
+{% extends 'layerout/GoogleApi.html' %}
+{% load static %}
+{% block content %}
+    <html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>accommadationforforeignstudents</title>
+    <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/Navigation-Clean.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
+</head>
+
+<body>
+<main>
+    <div id="content" class="fixed-top">
+        <nav class="navbar navbar-light navbar-expand-lg navigation-clean">
+            <div class="container"><a class="navbar-brand" href="#">Accommodation<br>ForForeignStudents</a>
+                <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"><span
+                        class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navcol-2">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"></li>
+                        <li class="nav-item dropdown"><a class="nav-link" aria-expanded="false"
+                                                         data-bs-toggle="dropdown" href="#">Sort&nbsp;
+                            &nbsp;&nbsp;</a>
+                            <div class="dropdown-menu"><a
+                                    class="dropdown-item" href="{% url 'hightolowrate' %}">Rate High to Low</a><a
+                                    class="dropdown-item"
+                                    href="{% url 'hightolow' %}">Price High to Low</a><a
+                                    class="dropdown-item" href="{% url 'lowtohigh' %}">Price Low to High</a></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+        {% for foo in otel %}
+            <div class="row mt-2 set">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body"><img src="{{ foo.hotel_link }}" width="305">
+                            <h4 class="card-title">{{ foo.hotel_name }}</h4>
+                            <h6 class="text-muted card-subtitle mb-2">Rating {{ foo.rank }}</h6><strong>Room No
+                                : {{ foo.room_number }}</strong><strong
+                                    class="ms-2 me-2">Room Price : {{ foo.price }} ₺</strong>
+                            <p class="card-text"><span>Phone : {{ foo.tel_no }}</span>&nbsp;<br> Adres : {{ foo.adres }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+
+    </div>
+    <div style="height: 5000px;width: 500px;min-height: 100%;min-width: 100%" id="map">
+
+    </div>
+</main>
+<script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
+
+
+{% endblock %}
+

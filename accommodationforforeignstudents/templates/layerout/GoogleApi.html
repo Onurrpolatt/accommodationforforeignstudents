@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+{% block content %}
+
+{% endblock %}
+<script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbnKkQHpEu7wiQeWQWMvr5vtd95AY8Dm0&callback=haritayiKur&v=weekly"
+        async
+></script>
+<script>
+    let map;
+    function haritayiKur() {
+        map = new google.maps.Map(document.getElementById("map"),{
+            center: {lat: 41.87194, lng: 12.56738},
+            zoom: 7,
+        });
+        markerYerlestir();
+    }
+    function markerYerlestir() {
+        function markerKapat() {
+            if (InfoObj.length > 0) {
+                InfoObj[0].set("marker", null);
+                InfoObj[0].close();
+                InfoObj[0].length = 0;
+            }
+        }
+        var InfoObj = [];
+        const icons = {
+            place: {
+                icon: '{% static 'assets/img/marker.png' %}',
+            },
+        }
+        var oteller = [
+            {% for foo in otel %}
+                {
+                    position: new google.maps.LatLng({{ foo.hlatitude }}, {{ foo.hlongitude }}),
+                    type: "place",
+                    place_name: "{{ foo.hotel_name }}",
+                    rank: "{{ foo.rank }}",
+                    price: "{{ foo.price }}",
+                    hotel_latitude :"{{ foo.hlatitude }}",
+                    hotel_hlongitude : "{{ foo.hlongitude }}",
+                },
+            {% endfor %}
+
+        ];
+        for (var i = 0; i < oteller.length; i++) {
+            var contentString = `<div class="card p-5" >
+                                    <h5 style="color: black;font-weight: bold;alignment: center">${oteller[i].place_name} </h5>
+                                        <div style="align-content: center;alignment: center;padding: 15px">
+                                        <p style="alignment: center"><bold style="margin-right: 5px;font-size: large; font-weight: bolder;alignment: center" >Score : ${oteller[i].rank}</bold></p>
+                                        <p style="font-size: large">Price : ${oteller[i].price} ₺</p>
+                                        <p>${oteller[i].hotel_latitude}                 ${oteller[i].hotel_hlongitude}</p>
+                                        </div>
+                                 </div>`;
+            const marker = new google.maps.Marker({
+                position: oteller[i].position,
+                icon: icons[oteller[i].type].icon,
+                map: map,
+                place_name: oteller[i].place_name
+            });
+            const infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+            marker.addListener('click', function () {
+                markerKapat();
+                infowindow.open(map, marker);
+                InfoObj[0] = infowindow;
+                var listofplacename = document.getElementsByClassName('card-title')
+                var listofcard = document.getElementsByClassName('set')
+                for (var k=0;k<listofplacename.length+1;k++){
+                    var test = listofplacename[k].innerHTML;
+                    if (test === marker.place_name){
+                        listofcard[k].scrollIntoView()
+                    }
+                }
+            })
+        }
+    }
+</script>
+
+
+
+
+
+
+
+
+</body>
+
+</html>
