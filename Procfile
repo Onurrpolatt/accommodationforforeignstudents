@@ -1,1 +1,1 @@
-web: gunicorn accommodationforforeignstudent.wsgi
+web: gunicorn accommodationforforeignstudents.wsgi
