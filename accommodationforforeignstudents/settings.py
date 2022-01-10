@@ -144,11 +144,12 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-STATICFILES_STORAGE = 'accommodationforforeignstudents.storage.S3Storage'
+
 
 
 STATIC_ROOT= os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT= os.path.join(BASE_DIR, 'media')
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
 django_heroku.settings(locals())
