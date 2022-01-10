@@ -1,1 +1,1 @@
-web: gunicorn thebestplace.wsgi
+web: gunicorn accommodationforforeignstudent.wsgi
